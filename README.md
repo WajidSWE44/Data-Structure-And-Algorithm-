@@ -1,4 +1,4 @@
-# 🚀 Java Data Structures & Algorithms
+# 🚀 Data Structures & Algorithms
 
 A collection of **Data Structures and Algorithms (DSA)** implemented in **Java**. This repository contains solutions to common algorithmic problems and implementations of fundamental data structures, making it useful for learning, interview preparation, and academic practice.
 
