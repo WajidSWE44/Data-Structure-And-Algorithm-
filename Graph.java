@@ -1,69 +1,54 @@
-package Graph;
+package Graphs;
 
-public class Graph {
-    int size;
-    String[] vertices;
-    boolean[][] a;//adjancency matrix
+class Node {
+    int vertex;
+    Node next;
 
-    public Graph(String[] args) {
-        size = args.length;
-        vertices = new String[size];
-        a = new boolean[size][size];
-        System.arraycopy(args,0,vertices,0,size);
+    public Node(int vertex) {
+        this.vertex = vertex;
+        this.next = null;
+    }
+}
+
+class Graph {
+    private Node[] adjacencyList;
+    private int vertices;
+
+    public Graph(int vertices) {
+        this.vertices = vertices;
+        adjacencyList = new Node[vertices];
     }
 
-    public void add(String v,String w){
-        int i = index(v), j = index(w);
-        a[i][j]= a[j][i] = true;
+    public void addEdge(int source, int destination) {
+        Node node = new Node(destination);
+        node.next = adjacencyList[source];
+        adjacencyList[source] = node;
+
+        // Since it's an undirected graph
+        node = new Node(source);
+        node.next = adjacencyList[destination];
+        adjacencyList[destination] = node;
     }
 
-    private int index(String v){
-        for(int i=0; i<size ; i++)
-            if(vertices[i].equals(v))
-            return i;
-            return a.length;
-    }
-
-    public String toString(){
-        StringBuffer buff =new StringBuffer("{"+ vertex(0));
-        for(int i=1; i<size; i++)
-            buff.append(","+vertex(i));
-            return buff + "}";
-    }
-
-    private String vertex(int i){
-        StringBuffer buf = new StringBuffer(vertices[i]+":");
-        for(int j=0; j<size; j++)
-            if(a[i][j])
-                buf.append(vertices[j]);
-            return buf+ " ";
+    public void printGraph() {
+        for (int i = 0; i < vertices; i++) {
+            System.out.print("Vertex " + i + ":");
+            Node temp = adjacencyList[i];
+            while (temp != null) {
+                System.out.print(" -> " + temp.vertex);
+                temp = temp.next;
+            }
+            System.out.println();
+        }
     }
 
     public static void main(String[] args) {
-        String[] vertices = { "A", "B", "C", "D" ,"E", "F","G"};
-        Graph graph = new Graph(vertices);
+        Graph graph = new Graph(4);
+        graph.addEdge(0, 1);
+        graph.addEdge(0, 2);
+        graph.addEdge(1, 3);
+        graph.addEdge(2, 3);
 
-        // Add edges between vertices
-        graph.add("A", "B");
-        //graph.add("A", "C");
-        //graph.add("A", "D");
-       // graph.add("A", "F");
-        graph.add("B", "C");
-        //graph.add("B", "F");
-        //graph.add("C", "C");
-        graph.add("C", "E");
-        graph.add("C", "G");
-        graph.add("D", "F");
-        //graph.add("D", "G");
-        graph.add("E", "F");
-        //graph.add("E", "G");
-
-
-
-        // Print the graph
-        System.out.println(graph);
+        graph.printGraph();
     }
-
 }
-
-
